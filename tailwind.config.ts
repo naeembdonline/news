@@ -8,9 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        headline: ["var(--font-headline)", "sans-serif"],
+        body: ["var(--font-body)", "sans-serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        surface: "#F8FAFC",
+        muted: "#F1F5F9",
+        editorial: {
+          red: "#B91C1C",
+          navy: "#0F172A",
+          gold: "#92400E",
+        },
       },
     },
   },

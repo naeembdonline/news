@@ -1,27 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens (Light Editorial) ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-headline: 'Anek Bangla', sans-serif;
+  --font-body: 'Hind Siliguri', sans-serif;
+
+  --bg-primary: #FFFFFF;
+  --bg-surface: #F8FAFC;
+  --bg-muted: #F1F5F9;
+
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  --text-faint: #94A3B8;
+
+  --border-primary: #E2E8F0;
+  --border-light: #F1F5F9;
+
+  --accent-red: #B91C1C;
+  --accent-red-light: #FEF2F2;
+  --accent-navy: #0F172A;
+  --accent-gold: #92400E;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* ─── Breaking Ticker ─── */
+.ticker-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker-scroll 45s linear infinite;
+}
+
+.ticker-inner:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
   }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ─── Category Label ─── */
+.cat-label {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: var(--font-headline);
+  border-radius: 2px;
+}
+
+/* ─── Section heading ─── */
+.section-heading {
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--accent-red);
+}
+
+/* ─── Minimal card hover ─── */
+.news-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* ─── Pull Quote ─── */
+.pull-quote {
+  border-left: 3px solid var(--accent-red);
+  background: var(--bg-surface);
+}
+
+/* ─── Ad Slot ─── */
+.ad-slot {
+  border: 1px dashed #CBD5E1;
+  background: var(--bg-surface);
+}
+
+/* ─── Correction Box ─── */
+.correction-box {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+}
+
+/* ─── Pulse dot (for breaking badge) ─── */
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: inline-block;
+  animation: pulse-anim 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-anim {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+  }
+}
+
+/* ─── Article body ─── */
+.article-body p {
+  margin-bottom: 1.5em;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.85;
+  color: #1E293B;
+}
+
+/* ─── Sub-lead sidebar item ─── */
+.sub-lead-item {
+  transition: background 0.15s ease;
+}
+
+.sub-lead-item:hover {
+  background: var(--bg-surface);
+}
+
+/* ─── Link underline animation ─── */
+.headline-link {
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent-red), var(--accent-red));
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+.headline-link:hover {
+  background-size: 100% 1px;
 }

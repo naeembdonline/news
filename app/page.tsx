@@ -1,101 +1,95 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import BreakingTicker from "@/components/BreakingTicker";
+import Navbar from "@/components/Navbar";
+import LeadStoryCard from "@/components/LeadStoryCard";
+import SubLeadsColumn from "@/components/SubLeadsColumn";
+import CategoryGrid from "@/components/CategoryGrid";
+import Footer from "@/components/Footer";
+import AdSlot from "@/components/AdSlot";
+import { leadStory, subLeads, categoryNews } from "@/lib/mockData";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "নয়া বাংলা — বাংলাদেশের নির্ভরযোগ্য সংবাদ",
+  description:
+    "বাংলাদেশ ও বিশ্বের সর্বশেষ খবর পড়ুন। রাজনীতি, অর্থনীতি, খেলাধুলা, বিনোদন ও প্রযুক্তি সংবাদ।",
+};
+
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen flex flex-col bg-white">
+      <BreakingTicker />
+      <Navbar />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-8">
+
+        {/* ─── Hero: Lead + Sub-leads ─── */}
+        <section
+          className="pb-10 mb-10"
+          style={{ borderBottom: "1px solid var(--border-primary)" }}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Lead Story — 7 columns */}
+            <div className="lg:col-span-7">
+              <LeadStoryCard article={leadStory} />
+            </div>
+
+            {/* Sub-leads sidebar — 5 columns */}
+            <div
+              className="lg:col-span-5 lg:pl-8"
+              style={{ borderLeft: "1px solid var(--border-primary)" }}
+            >
+              <h2
+                className="section-heading text-base font-bold mb-4"
+                style={{ fontFamily: "var(--font-headline)", color: "var(--accent-navy)" }}
+              >
+                শীর্ষ সংবাদ
+              </h2>
+              <SubLeadsColumn articles={subLeads} />
+            </div>
+          </div>
+        </section>
+
+        {/* ─── EXPANDED AD SLOT: Homepage Mid-feed (Task 6) ─── */}
+        <AdSlot format="mid-feed" slotName="হোমপেজ মিড-ফিড প্রিমিয়াম ব্যানার" />
+
+        {/* ─── Section Divider ─── */}
+        <div className="flex items-center gap-4 mb-10">
+          <div className="flex-1 h-px" style={{ background: "var(--border-primary)" }} />
+          <span
+            className="text-xs font-semibold tracking-wide px-3 py-1"
+            style={{
+              color: "var(--text-muted)",
+              fontFamily: "var(--font-headline)",
+              background: "var(--bg-surface)",
+              borderRadius: "2px",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            বিভাগ অনুযায়ী খবর
+          </span>
+          <div className="flex-1 h-px" style={{ background: "var(--border-primary)" }} />
+        </div>
+
+        {/* ─── Category Sections ─── */}
+        <div className="flex flex-col gap-16">
+          <CategoryGrid
+            categoryLabel="বিজ্ঞান ও প্রযুক্তি"
+            categorySlug="tech"
+            articles={categoryNews["বিজ্ঞান_প্রযুক্তি"]}
+          />
+          <CategoryGrid
+            categoryLabel="বিনোদন"
+            categorySlug="entertainment"
+            articles={categoryNews["বিনোদন"]}
+          />
+          <CategoryGrid
+            categoryLabel="আন্তর্জাতিক"
+            categorySlug="international"
+            articles={categoryNews["আন্তর্জাতিক"]}
+          />
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      <Footer />
     </div>
   );
 }
